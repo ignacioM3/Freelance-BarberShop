@@ -1,0 +1,12 @@
+*.env
+
+# Node
+node_modules/
+
+# Logs
+*.log
+
+.vscode/
+.vscode
+.idea/
+.DS_Store
