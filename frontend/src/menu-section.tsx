@@ -78,7 +78,6 @@ export const menuSection: MenuSection[] = [
         items: [ 
             {
                 label: "Turnos",
-               
                 icon: <TbCalendarSearch />,
                 to: AppRoutes.Appointment.route(),
                 role: [UserRole.ADMIN, UserRole.BARBER]
