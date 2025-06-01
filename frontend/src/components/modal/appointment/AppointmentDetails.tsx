@@ -90,7 +90,9 @@ export function AppointmentDetails() {
           className="bg-white w-full mx-5 max-w-[300px] rounded-md shadow-sm p-5 relative"
           onClick={(e) => e.stopPropagation()}
         >
-          <button>
+          <button
+          type="button"
+          >
             <IoClose
               className="absolute top-2 right-2 text-gray-500 hover:text-gray-700 cursor-pointer text-2xl"
               onClick={closeDetails}

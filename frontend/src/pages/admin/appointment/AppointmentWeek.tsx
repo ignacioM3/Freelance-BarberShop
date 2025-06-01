@@ -21,7 +21,7 @@ export function AppointmentWeek() {
   const currentWeekStart = startOfWeek(new Date(), { weekStartsOn: 0 });
   const selectedWeekStart = addDays(currentWeekStart, weekOffset * 7);
   const days = Array.from({ length: 5 }, (_, i) =>
-    addDays(selectedWeekStart, i + 2).getDate()
+    addDays(selectedWeekStart, i + 2)
   );
 
   return (
@@ -52,11 +52,11 @@ export function AppointmentWeek() {
           <div className="flex gap-2 md:gap-4">
             {["Mar", "Mie", "Jue", "Vie", "Sab"].map((day, index) => (
               <Link
-                to={location.pathname + `?appointmentWeek=${days[index].toString()}`}
+                to={`${location.pathname}?appointmentWeek=${days[index].toISOString()}`} 
                 key={index}
-                className="bg-gray-500 text-center font-bold text-white p-2 rounded-sm cursor-pointer hover:bg-gray-400 transition-colors"
+             className="bg-gray-500 text-center font-bold text-white p-2 rounded-sm cursor-pointer hover:bg-gray-400 transition-colors"
               >
-                {day} {days[index]}
+                {day} {days[index].getDate()} 
               </Link>
             ))}
           </div>
