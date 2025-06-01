@@ -11,22 +11,37 @@ import { toast } from "react-toastify";
 import { AppointmentStatus } from "../../../types/appointment-status";
 import { deleteAppointmentApiType } from "../../../types";
 import { IoClose } from "react-icons/io5";
+import { format, parseISO } from "date-fns";
 
 
 export function AppointmentDetails() {
   const navigate = useNavigate()
   const location = useLocation();
-  const {id : branchId} = useParams()
+  const { id: branchId } = useParams()
   const queryParams = new URLSearchParams(location.search);
   const AppointmentHours = queryParams.get('detailsAppointment') || "";
   const appointmentWeek = queryParams.get("appointmentWeek")
-  const day = appointmentWeek ? appointmentWeek : new Date().getDate()
+
   const show = AppointmentHours ? true : false
   const queryClient = useQueryClient();
 
+    const getFormattedDay = () => {
+    if (appointmentWeek) {
+      try {
+  
+        return format(parseISO(appointmentWeek), 'yyyy-MM-dd');
+      } catch {
+        return format(new Date(), 'yyyy-MM-dd');
+      }
+    }
+    return format(new Date(), 'yyyy-MM-dd');
+  };
+
+   const formattedDay = getFormattedDay()
+
   const closeDetails = () => {
     queryParams.delete("detailsAppointment");
-    if (!day) {
+    if (!formattedDay) {
       navigate(location.pathname, { replace: true });
     } else {
       navigate(`${location.pathname}?${queryParams.toString()}`, { replace: true });
@@ -36,33 +51,33 @@ export function AppointmentDetails() {
   const { data, isLoading, isError } = useQuery({
     queryKey: ['AppointmentDetails', branchId, AppointmentHours],
     queryFn: () => AppointmentHours ? getAppointmentByIdApi(AppointmentHours) : Promise.reject("No appointment ID"),
-    enabled: !!AppointmentHours, 
+    enabled: !!AppointmentHours,
     retry: false
   });
 
 
-  const {mutate} = useMutation({
+  const { mutate } = useMutation({
     mutationFn: updateStatusAppointmentApi,
     onError: (error) => {
       toast.error(error.message)
     },
     onSuccess: (data) => {
       toast.success(data)
-      queryClient.invalidateQueries({queryKey: ["getTodayAppointment", branchId]})
-      queryClient.invalidateQueries({queryKey: ["getAppointmentDayWeek", day]})
+      queryClient.invalidateQueries({ queryKey: ["getTodayAppointment", branchId] })
+      queryClient.invalidateQueries({ queryKey: ["getAppointmentDayWeek", formattedDay] })
       closeDetails()
     }
   })
 
-  const {mutate: deleteAppointment} = useMutation({
+  const { mutate: deleteAppointment } = useMutation({
     mutationFn: deleteAppointmentApi,
     onError: (error) => {
       toast.error(error.message)
     },
     onSuccess: () => {
       toast.success("Eliminado correctamente")
-      queryClient.invalidateQueries({queryKey: ["getTodayAppointment", branchId]})
-      queryClient.invalidateQueries({queryKey: ["getAppointmentDayWeek", day]})
+      queryClient.invalidateQueries({ queryKey: ["getTodayAppointment", branchId] })
+      queryClient.invalidateQueries({ queryKey: ["getAppointmentDayWeek", formattedDay] })
       closeDetails()
     }
   })
@@ -91,7 +106,7 @@ export function AppointmentDetails() {
           onClick={(e) => e.stopPropagation()}
         >
           <button
-          type="button"
+            type="button"
           >
             <IoClose
               className="absolute top-2 right-2 text-gray-500 hover:text-gray-700 cursor-pointer text-2xl"
@@ -108,31 +123,31 @@ export function AppointmentDetails() {
                 <p className="flex justify-between font-bold">Hora <span className="font-normal">{data.timeSlot}</span></p>
                 <p className="flex justify-between font-bold">Servicio <span className="font-normal">{data.service}</span></p>
                 <p className="flex justify-between font-bold">Precio <span className="font-normal">${data.price}</span></p>
-                <p className="flex justify-between font-bold">Whatsapp <span className="font-normal flex items-center gap-2">{data.whatsapp ?<a className="flex items-center gap-2" href={`http://wa.me/549${data.whatsapp}/`} target="_blank"> <FaWhatsapp className="text-green-500 cursor-pointer text-xl" /> {data.whatsapp} </a>: "Sin whatsapp"}</span></p>
+                <p className="flex justify-between font-bold">Whatsapp <span className="font-normal flex items-center gap-2">{data.whatsapp ? <a className="flex items-center gap-2" href={`http://wa.me/549${data.whatsapp}/`} target="_blank"> <FaWhatsapp className="text-green-500 cursor-pointer text-xl" /> {data.whatsapp} </a> : "Sin whatsapp"}</span></p>
                 <p className="flex justify-between font-bold">Instagram <span className="font-normal">{data.instagram ? <a className="flex items-center gap-2" href={`https://www.instagram.com/${data.instagram}/`} target="_blank"><FaInstagram className="text-[#E1306C] cursor-pointer text-xl" /> {data.instagram}</a> : "Sin instagram"}</span></p>
                 <p className="flex justify-between font-bold">Turno <span className="font-normal">{data.manual ? "Manual" : "Online"}</span></p>
 
                 <p className="text-center font-bold">Detalles</p>
                 <p className="text-center">{data.details ? data.details : "no hay detalles"}</p>
                 <div className="flex justify-center gap-2 mt-4">
-                  <div 
+                  <div
                     className="bg-red-500 p-2 rounded-md cursor-pointer text-white hover:bg-red-700 transition-colors"
                     onClick={() => handleDeleteAppointment(data._id)}
-                    >
+                  >
                     <MdDelete />
                   </div>
-            
-                  <div 
+
+                  <div
                     className="bg-orange-500 p-2 rounded-md cursor-pointer text-white hover:bg-orange-600 transition-colors"
                     onClick={() => handleUpdateStatus(AppointmentStatus.CANCELED)}
-                    >
+                  >
                     <MdCancelPresentation />
                   </div>
-                 
-                  <div 
+
+                  <div
                     className="bg-green-500 p-2 rounded-md cursor-pointer text-white hover:bg-green-700 transition-colors"
                     onClick={() => handleUpdateStatus(AppointmentStatus.COMPLETED)}
-                    >
+                  >
                     <FaCheckSquare />
                   </div>
                 </div>

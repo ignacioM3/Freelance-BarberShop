@@ -7,7 +7,7 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { createAppointmentApi } from "../../../api/AppointmentApi";
 import { createAppointmentForm } from "../../../types";
 import { AppointmentStatus } from "../../../types/appointment-status";
-import { getFormattedDates } from "../../../utils/getFormatDay";
+import { format, parseISO } from "date-fns";
 
 
 export interface Services {
@@ -32,8 +32,15 @@ export function AppointmentModal({ services }: SelectServiceProps) {
     const barberId = queryParams.get('barberId')!
     const branchId = id!
     const queryClient = useQueryClient();
+        const getApiDate = () => {
+            if (day) {
+              
+                return format(parseISO(day), 'yyyy-MM-dd');
+            }
+            
+            return format(new Date(), 'yyyy-MM-dd');
+        };
 
-    const { formatForApi } = getFormattedDates(day);
 
     const closeDetails = () => {
         queryParams.delete("time");
@@ -66,7 +73,8 @@ export function AppointmentModal({ services }: SelectServiceProps) {
             closeDetails()
             queryClient.invalidateQueries({ queryKey: ["getTodayAppointment", branchId] })
             if (day) {
-                queryClient.invalidateQueries({ queryKey: ["getAppointmentDayWeek", day] })
+                console.log("day", day)
+                queryClient.invalidateQueries({ queryKey: ["getAppointmentDayWeek", getApiDate()] })
             }
             reset()
         }
@@ -79,16 +87,16 @@ export function AppointmentModal({ services }: SelectServiceProps) {
         const selectedService = e.target.value;
 
         const selectedServiceObj = services?.find(service => service.service === selectedService);
-      
+
         setValue('service', selectedServiceObj?.service ?? "");
         setValue('price', selectedServiceObj?.price ?? 0);
-      };
+    };
     const handleCreateAppointment = (formData: createAppointmentForm) => {
 
         const data = {
             ...formData,
             branchId: branchId,
-            day: day ? formatForApi : new Date().toISOString().split('T')[0],
+            day: getApiDate(),
             timeSlot: time,
             barberId,
             manual: true,
