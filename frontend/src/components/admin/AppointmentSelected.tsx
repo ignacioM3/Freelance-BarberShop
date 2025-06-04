@@ -21,9 +21,7 @@ export  function AppointmentSelected({branchId}: AppointmentSelectedProps) {
     >
         <span>Turnos de la semana</span>
     </Link>
-    <div className="bg-gray-400 p-8 rounded-md cursor-pointer uppercase font-bold text-white hover:bg-gray-500 transition-colors w-full text-center md:max-w-[300px]">
-        <span>Notificaciones <span className='text-green-300'>(2)</span></span>
-    </div>
+
 </div>
   )
 }
