@@ -9,6 +9,7 @@ import { AppointmentDetails } from "../../../components/modal/appointment/Appoin
 import { AppointmentModal, Services } from "../../../components/modal/appointment/AddAppointmentModal";
 import { format, parseISO } from "date-fns";
 import { es } from "date-fns/locale";
+import { AppointmentStatus } from "../../../types/appointment-status";
 
 export function AppointmentWeekDay() {
   const { id } = useParams();
@@ -19,7 +20,6 @@ export function AppointmentWeekDay() {
   const detailsAppointment = queryParams.get("detailsAppointment");
   const navigate = useNavigate();
 
-  // Función para formatear fechas
   const getFormattedDates = (dateString: string | null) => {
     if (!dateString) {
       const today = new Date();
@@ -68,7 +68,7 @@ export function AppointmentWeekDay() {
 
     const getAppointmentName = (slot: string, barberId: string) => {
       const getAppointmentByBarberId = data.appointments.filter(
-        (a: Appointment) => (a.barberId === barberId ? a : null)
+        (a: Appointment) => (a.barberId === barberId && a.status !== AppointmentStatus.CANCELED)
       );
 
       const appointment = getAppointmentByBarberId.find(
@@ -107,8 +107,6 @@ export function AppointmentWeekDay() {
                         className={`flex text-center flex-col border ${
                           appointmentData?.appointment?.status === "completed"
                             ? "border-green-600 border-2"
-                            : appointmentData?.appointment?.status === "canceled"
-                            ? "border-orange-600 border-2"
                             : "border-gray-400"
                         } p-2 rounded-md cursor-pointer w-[80px] items-center justify-center ${
                           appointmentData ? "bg-gray-200" : "bg-white"
@@ -129,15 +127,10 @@ export function AppointmentWeekDay() {
                             className={`font-bold ${
                               appointmentData.appointment.status === "completed"
                                 ? "text-green-600"
-                                : appointmentData.appointment.status ===
-                                  "canceled"
-                                ? "text-orange-600"
                                 : "text-gray-400"
                             }`}
                           >
-                            {appointmentData.appointment.status === "canceled"
-                              ? "Libre"
-                              : appointmentData.firtName}
+                            {appointmentData.firtName}
                           </span>
                         ) : (
                           <span className="text-green-500 font-bold uppercase">

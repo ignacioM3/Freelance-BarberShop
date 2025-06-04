@@ -10,6 +10,7 @@ import LoadingSpinner from "../../../components/styles/LoadingSpinner";
 import { getTodayAppointmentApi } from "../../../api/AppointmentApi";
 import { generateTimeSlots } from "../../../utils/generateTime";
 import { Appointment, UserListType } from "../../../types";
+import { AppointmentStatus } from "../../../types/appointment-status";
 
 export function AppointmentToday() {
   const navigate = useNavigate();
@@ -37,7 +38,7 @@ export function AppointmentToday() {
     
     const getAppointmentName = (slot: string, barberId: string) => {
       const getAppointmentByBarberId = data.appointments.filter((a: Appointment) =>
-        a.barberId === barberId ? a : null
+        a.barberId === barberId && a.status !== AppointmentStatus.CANCELED
       );
   
 
@@ -70,10 +71,7 @@ export function AppointmentToday() {
                     <div
                       key={index}
                       className={`flex text-center flex-col border ${appointmentData?.appointment.status === "completed"
-                          ? "border-green-600 border-2"
-                          : appointmentData?.appointment.status === "canceled"
-                            ? "border-orange-600 border-2"
-                            : "border-gray-400"
+                          ? "border-green-600 border-2" : "border-gray-400"
 
                         } p-2 rounded-md cursor-pointer w-[80px] items-center justify-center ${appointmentData ? "bg-gray-200" : "bg-white"
                         }`}
@@ -85,10 +83,8 @@ export function AppointmentToday() {
                       {appointmentData ? (
                         <span className={`font-bold ${appointmentData?.appointment.status === "completed"
                             ? "text-green-600 border-2"
-                            : appointmentData?.appointment.status === "canceled"
-                              ? "text-orange-600 border-2"
                               : "text-gray-400"
-                          } overflow-hidden whitespace-nowrap w-full text-sm text-center `}>{appointmentData.appointment.status === "canceled" ? "Libre" : appointmentData.firtName}</span>
+                          } overflow-hidden whitespace-nowrap w-full text-sm text-center `}>{appointmentData.firtName}</span>
                       ) : (
                         <span className="text-green-500 font-bold uppercase">Libre</span>
                       )}
