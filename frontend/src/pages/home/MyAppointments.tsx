@@ -27,6 +27,7 @@ export function MyAppointments() {
         enabled: !!currentUser?._id,
     });
 
+    console.log(data)
 
     if (isError) return <h1>falta implementar error</h1>
     if (isLoading) return (
