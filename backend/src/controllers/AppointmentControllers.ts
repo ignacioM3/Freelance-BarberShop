@@ -18,6 +18,7 @@ export class AppointmentControllers {
         day: req.body.day,
         barberId: req.body.barberId,
         timeSlot: req.body.timeSlot,
+        status: appointmentStatus.booked
       });
 
       if (findAppointmnet) {

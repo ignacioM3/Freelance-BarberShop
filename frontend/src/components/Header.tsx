@@ -101,7 +101,7 @@ export function Header() {
         {
           currentUser ? (
             <>
-              {currentUser.role === UserRole.ADMIN && (
+              {(currentUser.role === UserRole.ADMIN || currentUser.role === UserRole.BARBER) && (
                 <Link to={AppRoutes.homeAdmin.route()} className='flex items-center justify-end gap-2 p-2 hover:bg-gray-500 hover:text-white text-green-600 bg-green-300 font-bold'>Admin<FaUserGroup /></Link>
               )}
               <Link to={AppRoutes.profile.route()} className='flex items-center justify-end gap-2 p-2 text-gray-300 font-bold'>Perfil<FaRegUser className='font-bold' /></Link>

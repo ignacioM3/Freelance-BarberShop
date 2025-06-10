@@ -41,7 +41,7 @@ export function ForgoPassword() {
       </p>
       <form 
         onSubmit={handleSubmit(handleForgotPassword)}
-        className=" p-10 max-w-[650px] mx-auto  bg-gray-100 mt-5 shadow-md rounded-sm  lg:max-w-[450px]"
+        className=" p-10 max-w-[650px] mx-auto mt-5 shadow-md rounded-sm  lg:max-w-[450px]"
       >
       <div className="flex flex-col gap-5">
           <label className="font-normal text-2xl" htmlFor="email">

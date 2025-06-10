@@ -53,7 +53,7 @@ export function ResumenAppointment() {
             toast.error(error.message)
         },
         onSuccess: () => {
-            toast.success("Turno reservado con éxito, regresando a la página principal");
+            toast.success("Turno reservado con éxito, redirigiendo a los turnos");
             setEnabled(false)
             setTimeout(() => {
                 navigate(AppRoutes.home.route(), { replace: true })

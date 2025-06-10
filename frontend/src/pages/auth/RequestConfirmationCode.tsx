@@ -37,7 +37,7 @@ export function RequestConfirmationCode() {
         </p>
         <form 
              onSubmit={handleSubmit(handleRequestCode)}
-             className=" p-10 max-w-[650px] mx-auto  bg-gray-100 mt-5 shadow-md rounded-sm  lg:max-w-[450px]"
+             className=" p-10 max-w-[650px] mx-auto mt-5 shadow-md rounded-sm  lg:max-w-[450px]"
             >
             <div className="flex flex-col gap-5 lg:gap-3 mb-2">
                 <label 
