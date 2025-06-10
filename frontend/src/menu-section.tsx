@@ -1,12 +1,12 @@
 import { UserRole } from "./types/use-role";
 import { FaUserAlt } from "react-icons/fa";
 import { HiScissors } from "react-icons/hi2";
-import { TbMoneybag } from "react-icons/tb";
+import { TbCalendarSearch, TbMoneybag } from "react-icons/tb";
 import { AiFillHome } from "react-icons/ai";
 import { MdOutlineProductionQuantityLimits } from "react-icons/md";
 import { BiBuildings } from "react-icons/bi";
 import { AppRoutes } from "./routes";
-import { TbCalendarSearch } from "react-icons/tb";
+import { FaBell } from "react-icons/fa";
 
 export interface MenuItem {
     label: string;
@@ -42,6 +42,8 @@ export const menuSection: MenuSection[] = [
                 icon: <AiFillHome />,
                 to: AppRoutes.home.route()
             },
+            
+          
             {
                 label: "Usuarios",
                 icon: <FaUserAlt />, 
@@ -65,11 +67,18 @@ export const menuSection: MenuSection[] = [
                 icon: <MdOutlineProductionQuantityLimits />,
                 to: "",
                 role: [UserRole.ADMIN]
+            },
+              {
+                label: 'Notificaciones',
+                icon: <FaBell />,
+                to: "",
+                role: [UserRole.ADMIN, UserRole.BARBER]
             }
         ]
     },
     {
         label: [
+            
             {
                 label: 'Planificación',
                 role: [UserRole.ADMIN, UserRole.BARBER]
@@ -87,7 +96,7 @@ export const menuSection: MenuSection[] = [
                 icon: <TbMoneybag />, 
                 to: AppRoutes.ProfitHome.route(),
                 role: [UserRole.ADMIN]
-            },
+            }
             
         ]
     }

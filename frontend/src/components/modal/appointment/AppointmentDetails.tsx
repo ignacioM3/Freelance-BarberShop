@@ -12,9 +12,13 @@ import { AppointmentStatus } from "../../../types/appointment-status";
 import { deleteAppointmentApiType } from "../../../types";
 import { IoClose } from "react-icons/io5";
 import { format, parseISO } from "date-fns";
+import { useState } from "react";
+import CancelApointmentAdminModal from "./CancelAppointmentAdminModal";
 
 
 export function AppointmentDetails() {
+  const [showCancelModal, setShowCancelModal] = useState(false);
+  const [showDeleteModlal, setShowDeleteModal] = useState(false);
   const navigate = useNavigate()
   const location = useLocation();
   const { id: branchId } = useParams()
@@ -25,10 +29,10 @@ export function AppointmentDetails() {
   const show = AppointmentHours ? true : false
   const queryClient = useQueryClient();
 
-    const getFormattedDay = () => {
+  const getFormattedDay = () => {
     if (appointmentWeek) {
       try {
-  
+
         return format(parseISO(appointmentWeek), 'yyyy-MM-dd');
       } catch {
         return format(new Date(), 'yyyy-MM-dd');
@@ -37,7 +41,7 @@ export function AppointmentDetails() {
     return format(new Date(), 'yyyy-MM-dd');
   };
 
-   const formattedDay = getFormattedDay()
+  const formattedDay = getFormattedDay()
 
   const closeDetails = () => {
     queryParams.delete("detailsAppointment");
@@ -132,14 +136,14 @@ export function AppointmentDetails() {
                 <div className="flex justify-center gap-2 mt-4">
                   <div
                     className="bg-red-500 p-2 rounded-md cursor-pointer text-white hover:bg-red-700 transition-colors"
-                    onClick={() => handleDeleteAppointment(data._id)}
+                    onClick={() => setShowDeleteModal(true)}
                   >
                     <MdDelete />
                   </div>
 
                   <div
                     className="bg-orange-500 p-2 rounded-md cursor-pointer text-white hover:bg-orange-600 transition-colors"
-                    onClick={() => handleUpdateStatus(AppointmentStatus.CANCELED)}
+                    onClick={() => setShowCancelModal(true)}
                   >
                     <MdCancelPresentation />
                   </div>
@@ -158,6 +162,26 @@ export function AppointmentDetails() {
           }
         </form>
       </div>
+      <CancelApointmentAdminModal
+        show={showCancelModal}
+        onCancel={() => setShowCancelModal(false)}
+        onConfirm={() => {
+          handleUpdateStatus(AppointmentStatus.CANCELED);
+          setShowCancelModal(false);
+        }}
+        message="¿Querés cancelar este turno?"
+      />
+           <CancelApointmentAdminModal
+        show={showDeleteModlal}
+        onCancel={() => setShowDeleteModal(false)}
+        onConfirm={() => {
+          handleDeleteAppointment(data._id);
+          setShowDeleteModal(false);
+        }}
+        message="¿Querés eliminar este turno?"
+      />
     </div>
+
+
   )
 }
