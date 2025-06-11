@@ -30,7 +30,7 @@ export function Products() {
           
           <button 
             className="mt-8 flex items-center justify-center gap-2 mx-auto cursor-pointer bg-[#ae9961] hover:bg-[#8a774d] text-white font-medium py-3 px-6 rounded-lg transition duration-300 transform hover:scale-105"
-            disabled
+            type="button"
             onClick={ () => navigate(AppRoutes.home.route()) }
           >
             <FaHome /> Volver al Inicio 

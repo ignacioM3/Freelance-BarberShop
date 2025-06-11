@@ -2,6 +2,7 @@ import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useLocation, useNavigate } from 'react-router-dom'
 import { toast } from 'react-toastify';
 import { deleteUserApi } from '../../../api/UserApi';
+import { AppRoutes } from '../../../routes';
 
 export default function DeleteUserModal() {
     const location = useLocation();
@@ -21,7 +22,7 @@ export default function DeleteUserModal() {
         onSuccess: (data) => {
             toast.success(data)
             queryClient.invalidateQueries({ queryKey: ['getUsers'] })
-            navigate(location.pathname, { replace: true })
+            navigate(AppRoutes.userListAdmin.route(), { replace: true });
         }
     })
 

@@ -19,11 +19,11 @@ export function About() {
       <div className="max-w-6xl mx-auto">
         {/* Hero Section */}
         <div className="text-center mb-12">
-          <h1 className="text-4xl md:text-5xl font-bold text-amber-900 mb-4">
+          <h1 className="text-4xl md:text-5xl font-bold text-[#8a6d3b] mb-4">
            Nosotros
           </h1>
-          <div className="w-32 h-1 bg-amber-700 mx-auto rounded-full mb-6"></div>
-          <p className="text-xl text-amber-800 max-w-3xl mx-auto">
+          <div className="w-32 h-1 bg-[#8a6d3b] mx-auto rounded-full mb-6"></div>
+          <p className="text-xl text-[#775b29] max-w-3xl mx-auto">
             Más que un corte de pelo, una experiencia de tradición y estilo
           </p>
         </div>
@@ -31,17 +31,17 @@ export function About() {
         {/* Historia */}
         <div className="flex flex-col md:flex-row items-center gap-10 mb-16">
           <div className="md:w-1/2">
-          <img src="/local.webp" alt="" className="bg-gray-200 rounded-xl w-full h-72 flex items-center justify-center text-amber-800 cursor-pointer" />
+          <img src="/local.webp" alt="" className="mx-auto bg-gray-200 rounded-xl w-[95%] h-72 flex items-center justify-center text-amber-800 cursor-pointer" />
           </div>
           <div className="md:w-1/2">
-            <h2 className="text-3xl font-bold text-amber-800 mb-6">Nuestra Historia</h2>
-            <p className="text-amber-900 mb-4">
+            <h2 className="text-3xl font-bold text-[#8a6d3b] mb-6">Nuestra Historia</h2>
+            <p className="text-[#755b2d] mb-4">
               Fundada en 2024, nuestra barbería nació de la pasión por el arte tradicional de la barbería 
               combinado con un toque moderno. Lo que empezó como un pequeño local en el centro de la ciudad, 
               hoy se ha convertido en una cadena de sucursales que mantiene el mismo compromiso con la 
               excelencia y la satisfacción del cliente.
             </p>
-            <p className="text-amber-900">
+            <p className="text-[#755b2d] ">
               Cada día, nuestros barberos profesionales combinan técnicas ancestrales con las últimas 
               tendencias para ofrecerte un servicio incomparable.
             </p>
@@ -73,7 +73,7 @@ export function About() {
                 key={index} 
                 className="bg-amber-50 mx-2 cursor-pointer bg-opacity-90 rounded-xl p-6 border border-amber-200 text-center hover:shadow-lg transition-shadow duration-300"
               >
-                <div className="w-16 h-16 rounded-full bg-amber-800 flex items-center justify-center mx-auto mb-4">
+                <div className="w-16 h-16 rounded-full bg-[#8a6d3b] flex items-center justify-center mx-auto mb-4">
                   <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8 text-amber-100" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d={value.icon} />
                   </svg>
@@ -85,41 +85,16 @@ export function About() {
           </div>
         </div>
 
-        {/* Equipo */}
-        <div className="mb-16">
-          <h2 className="text-3xl font-bold text-center text-amber-800 mb-12">Nuestro Equipo</h2>
-          <div className="flex justify-center flex-col md:flex-row items-center gap-8 mx-2">
-            {[
-              { name: "Carlos Méndez", role: "Fundador & Barber", experience: "15 años" },
-              { name: "Carlos Méndez", role: "Fundador & Barber", experience: "15 años" },
-            ].map((member, index) => (
-              <div 
-                key={index} 
-                className="hover:shadow-lg transition-shadow duration-300 bg-amber-50 max-w-[250px] cursor-pointer w-full bg-opacity-90 rounded-xl overflow-hidden border border-amber-200 text-center"
-              >
-                <div className="bg-gray-200 border-2 border-dashed w-full h-48 flex items-center justify-center text-amber-800 ">
-                  [Foto de {member.name}]
-                </div>
-                <div className="p-4">
-                  <h3 className="text-xl font-bold text-amber-800">{member.name}</h3>
-                  <p className="text-amber-700 mb-1">{member.role}</p>
-                  <p className="text-sm text-amber-600">Experiencia: {member.experience}</p>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
 
-        {/* Llamada a la acción */}
-        <div className="text-center py-12 px-4 bg-amber-800 rounded-x mx-2 rounded-md">
-          <h2 className="text-3xl font-bold text-amber-100 mb-4">¿Listo para una nueva experiencia?</h2>
-          <p className="text-amber-200 mb-8 max-w-2xl mx-auto">
+        <div className="text-center py-12 px-4 bg-[#f8f4e8]  rounded-x mx-2 rounded-md">
+          <h2 className="text-3xl font-bold text-[#8a6d3b] mb-4">¿Listo para una nueva experiencia?</h2>
+          <p className="text-[#8a6d3b] mb-8 max-w-2xl mx-auto">
             Reserva tu turno ahora y a probar esta experiencia
           </p>
           <button 
           type="button"
           onClick={() => appointmentRoute()}
-            className="bg-amber-600 hover:bg-amber-700 text-white font-bold py-3 px-8 rounded-lg transition duration-300">
+            className="bg-[#ae9961] hover:bg-[#8a774d] text-white font-bold py-3 px-8 rounded-lg transition duration-300">
             Reservar Ahora
           </button>
         </div>
